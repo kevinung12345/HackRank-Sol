@@ -1,0 +1,151 @@
+Two children, Lily and Ron, want to share a chocolate bar. Each of the squares has an integer on it.
+
+Lily decides to share a contiguous segment of the bar selected such that:
+
+The length of the segment matches Ron's birth month, and,
+The sum of the integers on the squares is equal to his birth day.
+Determine how many ways she can divide the chocolate.
+
+//JS
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+/*
+ * Complete the 'birthday' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY s
+ *  2. INTEGER d
+ *  3. INTEGER m
+ */
+
+function birthday(s, d, m) {
+    // Write your code here
+    let matches = 0;
+for(let i = 0; i<s.length ; i++ )
+{
+    let sub_array = s.slice(i, i + m)
+    let sum = sub_array.reduce((prev, curr) => prev + curr)
+    if (sum == d){
+        matches++;
+    }
+   
+}
+    
+ return matches;
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const n = parseInt(readLine().trim(), 10);
+
+    const s = readLine().replace(/\s+$/g, '').split(' ').map(sTemp => parseInt(sTemp, 10));
+
+    const firstMultipleInput = readLine().replace(/\s+$/g, '').split(' ');
+
+    const d = parseInt(firstMultipleInput[0], 10);
+
+    const m = parseInt(firstMultipleInput[1], 10);
+
+    const result = birthday(s, d, m);
+
+    ws.write(result + '\n');
+
+    ws.end();
+}
+
+
+//CS
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'birthday' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY s
+     *  2. INTEGER d
+     *  3. INTEGER m
+     */
+
+    public static int birthday(List<int> s, int d, int m)
+    {
+            Console.WriteLine(s);
+            Console.WriteLine(d);
+            Console.WriteLine(m);
+            
+                    int total = 0;
+            for(int i = 0; i <= s.Count - m; i++) {
+                var segsSum = s.GetRange(i, m).Aggregate((a, b) => a + b);
+                if(segsSum == d) {
+                total++;
+                }
+            }
+            return total;
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> s = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sTemp => Convert.ToInt32(sTemp)).ToList();
+
+        string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
+
+        int d = Convert.ToInt32(firstMultipleInput[0]);
+
+        int m = Convert.ToInt32(firstMultipleInput[1]);
+
+        int result = Result.birthday(s, d, m);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
+
